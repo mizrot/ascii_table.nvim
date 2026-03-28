@@ -6,7 +6,7 @@ Simple ASCII table manipulation for Neovim.
 
 ```lua
 {
-    "mizrot/ascii-table.nvim",
+    "mizrot/ascii_table.nvim",
     config = function()
         require("ascii_table").setup()
     end,
