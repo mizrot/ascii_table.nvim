@@ -1,64 +1,98 @@
-local parser = require("ascii_table.parser")
-local renderer = require("ascii_table.renderer")
+--- init.lua
+--- Public API for ascii_table.nvim.
+---
+--- Quickstart in your Neovim config:
+---   require("ascii_table").setup()
+---
+--- Or with options:
+---   require("ascii_table").setup({
+---     enter_key = "<leader>tt",   -- keymap to enter Table mode
+---   })
+---
+--- User commands:
+---   :AsciiTable              – enter Table mode at cursor
+---   :AsciiTableNew [R] [C]   – create an R×C table and enter Table mode
+---   :AsciiTableExit          – exit Table mode
 
 local M = {}
 
-function M.align_table(start_line, end_line)
-	local lines = vim.api.nvim_buf_get_lines(0, start_line, end_line, false)
-	local rows = parser.parse_lines(lines)
-	local new_lines = renderer.render(rows)
+M.config = {
+  enter_key = "<leader>tt",
+}
 
-	vim.api.nvim_buf_set_lines(0, start_line, end_line, false, new_lines)
+local function get_table_mode()
+  return require("ascii_table.table_mode")
 end
 
-function M.create_table(rows, cols)
-	local data = {}
-
-	for _ = 1, rows do
-		local row = {}
-		for _ = 1, cols do
-			table.insert(row, "")
-		end
-		table.insert(data, row)
-	end
-
-	return renderer.render(data)
-end
-
-function M.insert_collumn(start_line, end_line)
-	local lines = vim.api.nvim_buf_get_lines(0, start_line, end_line, false)
-	local rows = parser.parse_lines(lines)
-	new_rows = {}
-	for i in pairs(rows) do
-		table.insert(rows[i], "")
-	end
-    local new_lines =  renderer.render(rows)
-    vim.api.nvim_buf_set_lines(0, start_line, end_line, false, new_lines)
-end
+-- ─── Setup ────────────────────────────────────────────────────────────────────
 
 function M.setup(opts)
-	opts = opts or {}
+  M.config = vim.tbl_deep_extend("force", M.config, opts or {})
 
-	vim.api.nvim_create_user_command("AsciiAlign", function()
-		local start_line = vim.fn.line("'<") - 1
-		local end_line = vim.fn.line("'>")
-		M.align_table(start_line, end_line)
-	end, { range = true })
+  -- Global keymap: enter Table mode
+  vim.keymap.set("n", M.config.enter_key, function()
+    local bufnr = vim.api.nvim_get_current_buf()
+    get_table_mode().enter(bufnr)
+  end, { desc = "[ascii_table] Enter Table mode" })
+end
 
-	vim.api.nvim_create_user_command("AsciiTable", function(opts)
-		local args = vim.split(opts.args, " ")
-		local rows = tonumber(args[1]) or 2
-		local cols = tonumber(args[2]) or 2
+-- ─── Public API ───────────────────────────────────────────────────────────────
 
-		local lines = M.create_table(rows, cols)
-		vim.api.nvim_put(lines, "l", true, true)
-	end, { nargs = "*" })
+--- Enter Table mode for the current buffer.
+function M.enter()
+  local bufnr = vim.api.nvim_get_current_buf()
+  get_table_mode().enter(bufnr)
+end
 
-	vim.api.nvim_create_user_command("AsciiInsertCollumn", function()
-		local start_line = vim.fn.line("'<") - 1
-		local end_line = vim.fn.line("'>")
-		M.insert_collumn(start_line, end_line)
-	end, {range = true})
+--- Exit Table mode for the current buffer.
+function M.exit()
+  local bufnr = vim.api.nvim_get_current_buf()
+  get_table_mode().exit(bufnr)
+end
+
+--- Insert a new ASCII table at the current cursor position.
+--- @param nrows  number  Total rows including header (default 3)
+--- @param ncols  number  Number of columns (default 3)
+function M.create_table(nrows, ncols)
+  nrows = nrows or 3
+  ncols = ncols or 3
+
+  local renderer = require("ascii_table.renderer")
+
+  -- Build a skeleton table with header names and empty body
+  local rows = {}
+  for r = 1, nrows do
+    local row = {}
+    for c = 1, ncols do
+      row[c] = (r == 1) and ("Col " .. c) or ""
+    end
+    table.insert(rows, row)
+  end
+
+  -- Initial column widths from content
+  local col_widths = {}
+  for c = 1, ncols do
+    col_widths[c] = #("Col " .. c)  -- "Col 1" = 5 chars, "Col 10" = 6, etc.
+  end
+
+  local tbl = {
+    rows       = rows,
+    nrows      = nrows,
+    ncols      = ncols,
+    col_widths = col_widths,
+  }
+
+  -- Render the new table into a list of lines
+  local lines = renderer.to_lines(tbl)
+
+  -- Insert below the current cursor line
+  local bufnr  = vim.api.nvim_get_current_buf()
+  local cursor = vim.api.nvim_win_get_cursor(0)
+  vim.api.nvim_buf_set_lines(bufnr, cursor[1], cursor[1], false, lines)
+
+  -- Position cursor on the first line of the new table and enter Table mode
+  vim.api.nvim_win_set_cursor(0, { cursor[1] + 1, 0 })
+  get_table_mode().enter(bufnr)
 end
 
 return M
