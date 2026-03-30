@@ -244,6 +244,7 @@ function M.enter(bufnr)
 
   -- Initialise state
   local st = state.init(bufnr)
+  vim.print(st)
   st.mode = "table"
   st.tbl  = tbl
 

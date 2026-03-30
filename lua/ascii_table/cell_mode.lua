@@ -28,7 +28,7 @@ local NS = vim.api.nvim_create_namespace("ascii_table")
 local function rehighlight(bufnr, st)
   vim.api.nvim_buf_clear_namespace(bufnr, NS, 0, -1)
   local bl, bc = renderer.cell_cursor_pos(st.tbl, st.row, st.col)
-  vim.api.nvim_win_set_cursor(0, { bl, bc - 1 })
+  vim.api.nvim_win_set_cursor(0, { bl, bc-1 })
   vim.api.nvim_buf_add_highlight(
     bufnr, NS, "Visual",
     bl - 1, bc - 1, bc - 1 + st.tbl.col_widths[st.col]
@@ -46,7 +46,7 @@ local function commit(float_win, float_buf, bufnr, drow, dcol)
   if vim.api.nvim_win_is_valid(float_win) then
     vim.api.nvim_win_close(float_win, true)
   end
-  vim.api.nvim_buf_delete(float_buf, { force = true })
+---  vim.api.nvim_buf_delete(float_buf, { force = true })
 
   local st = state.get(bufnr)
   if not st then return end
@@ -143,10 +143,10 @@ function M.enter(bufnr)
       local s = state.get(bufnr)
       if s and s.mode == "cell" then
         s.mode = "table"
-        rehighlight(bufnr, s)
+	vim.cmd("stopinsert")
       end
-    end,
-  })
+    end
+})
 end
 
 return M
