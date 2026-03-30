@@ -17,7 +17,7 @@
 local M = {}
 
 M.config = {
-	enter_key = "<leader>T",
+	enter_key = "<leader>tt",
 }
 
 local function get_table_mode()
@@ -27,6 +27,10 @@ end
 -- Setup
 
 function M.setup(opts)
+
+---	package.path = package.path .. "/usr/share/lua/5.1/?.lua"
+---	package.cpath = package.cpath .. "/usr/lib/lua/5.1/socket/?.so"
+---	require("mobdebug").start()
 
 	M.config = vim.tbl_deep_extend("force", M.config, opts or {})
 

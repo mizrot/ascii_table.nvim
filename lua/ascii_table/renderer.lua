@@ -3,16 +3,17 @@
 --- and writes them into the buffer, replacing the original table region.
 ---
 --- Rendered format:
----   +--------+-----+------+
----   | Header | Age | City |
----   +--------+-----+------+
----   | Alice  | 30  | NYC  |
----   | Bob    | 25  | LA   |
----   +--------+-----+------+
-
+--[[
+       +--------+-----+------+
+       | Header | Age | City |
+       +--------+-----+------+
+       | Alice  | 30  | NYC  |
+       | Bob    | 25  | LA   |
+       +--------+-----+------+ 
+--]]
 local M = {}
 
--- ─── Line builders ────────────────────────────────────────────────────────────
+-- Line builders 
 
 --- "+--------+-----+------+"
 local function make_sep(col_widths)
@@ -34,7 +35,7 @@ local function make_row(cells, col_widths)
   return "|" .. table.concat(parts, "|") .. "|"
 end
 
--- ─── Public API ───────────────────────────────────────────────────────────────
+-- Public API 
 
 --- Convert a table struct to a list of buffer lines.
 --- Layout: sep / header / sep / body-rows... / sep
@@ -61,7 +62,7 @@ function M.write(bufnr, tbl)
   tbl.end_line = tbl.start_line + #lines - 1
 end
 
--- ─── Cursor positioning ───────────────────────────────────────────────────────
+-- Cursor positioning 
 
 --- Return (buf_line, buf_col) — both 1-indexed — for the first character of
 --- the content of cell (row_idx, col_idx) after a fresh render.

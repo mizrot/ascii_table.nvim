@@ -31,7 +31,7 @@ local cell_mode = require("ascii_table.cell_mode")
 local M  = {}
 local NS = vim.api.nvim_create_namespace("ascii_table")
 
--- ─── Internal utilities ───────────────────────────────────────────────────────
+-- Internal utilities 
 
 --- Move cursor to the given cell and update the highlight.
 local function go_to_cell(bufnr, st, row, col)
@@ -60,7 +60,7 @@ local function flush(bufnr, st)
   go_to_cell(bufnr, st, st.row, st.col)
 end
 
--- ─── Navigation ───────────────────────────────────────────────────────────────
+-- Navigation 
 
 local function nav(bufnr, drow, dcol)
   local st = state.get(bufnr)
@@ -89,7 +89,7 @@ local function tab_prev(bufnr)
   end
 end
 
--- ─── Row operations ───────────────────────────────────────────────────────────
+-- Row operations 
 
 local function insert_row(bufnr, offset)
   local st = state.get(bufnr)
@@ -115,7 +115,7 @@ local function delete_row(bufnr)
   flush(bufnr, st)
 end
 
--- ─── Column operations ────────────────────────────────────────────────────────
+-- Column operations 
 
 local function insert_col(bufnr, offset)
   local st = state.get(bufnr)
@@ -145,7 +145,7 @@ local function delete_col(bufnr)
   flush(bufnr, st)
 end
 
--- ─── Format / align ───────────────────────────────────────────────────────────
+-- Format / align 
 
 local function format_table(bufnr)
   local st = state.get(bufnr)
@@ -154,7 +154,7 @@ local function format_table(bufnr)
   vim.notify("[ascii_table] Table formatted.", vim.log.levels.INFO)
 end
 
--- ─── Keymap registration ──────────────────────────────────────────────────────
+-- Keymap registration 
 
 -- Keep track of keys we've set so we can remove them cleanly on exit.
 local _registered = {}  -- [bufnr] = list of { mode, lhs }
