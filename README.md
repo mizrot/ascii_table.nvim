@@ -6,6 +6,7 @@ This plugin implements two modes for table manipulation: Table and Cell mode.
 
 ## Table Mode (T)
 This is the primary table manipulation mode. Virtual layer over Normal mode
+
 This mode allows you:
  * Resize the table
  * Add rows, columns 
@@ -40,8 +41,9 @@ Important note: other keys that work in Normal mode are disabled
 
 ## Cell Mode (C)
 This is the editing mode. Virtual layer over Insert mode
-In this mode you can:
- * Change the cell's content
+
+This mode allows you:
+ * Change cell's content
  * Insert line breaks (the same as resizing)
  * Insert any ASCII symbol, except **`|`** and **`-`**
 
