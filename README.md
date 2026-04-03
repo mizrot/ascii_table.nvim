@@ -1,11 +1,12 @@
 # ascii-table.nvim
 
-Neovim plugin that *solves* text-based tables for you. This plugin is built from the ground up, no use of additional parsing libraries whatsoever.
+Neovim plugin that *solves* text-based tables for you.
+
 This plugin implements two modes for table manipulation: Table and Cell mode.
 
 ## Table Mode (T)
 This is the primary table manipulation mode. Virtual layer over Normal mode
-In this mode you can:
+This mode allows you:
  * Resize the table
  * Add rows, columns 
  * Move between the cells (swiftly and comfortably)
@@ -42,7 +43,7 @@ This is the editing mode. Virtual layer over Insert mode
 In this mode you can:
  * Change the cell's content
  * Insert line breaks (the same as resizing)
- * Insert any ASCII symbol, except **|** and **-**
+ * Insert any ASCII symbol, except **`|`** and **`-`**
 
 ### Cell Mode commands
 | Key      | Operation        | 
