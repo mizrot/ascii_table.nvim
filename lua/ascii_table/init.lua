@@ -37,10 +37,6 @@ function M.insert_collumn(start_line, end_line)
 end
 
 function M.setup(opts)
-	package.path = package.path .. "/usr/share/lua/5.1/?.lua"
-	package.cpath = package.cpath .. "/usr/lib/lua/5.1/socket/?.so"
-	require("mobdebug").start()
-
 	opts = opts or {}
 
 	vim.api.nvim_create_user_command("AsciiAlign", function()
