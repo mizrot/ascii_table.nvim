@@ -17,7 +17,7 @@ function M.create_table(rows, cols)
 	for _ = 1, rows do
 		local row = {}
 		for _ = 1, cols do
-			table.insert(row, "")
+			table.insert(row, "\n")
 		end
 		table.insert(data, row)
 	end
@@ -37,6 +37,10 @@ function M.insert_collumn(start_line, end_line)
 end
 
 function M.setup(opts)
+	package.path = package.path .. "/usr/share/lua/5.1/?.lua"
+	package.cpath = package.cpath .. "/usr/lib/lua/5.1/socket/?.so"
+	require("mobdebug").start()
+
 	opts = opts or {}
 
 	vim.api.nvim_create_user_command("AsciiAlign", function()
