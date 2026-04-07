@@ -48,7 +48,7 @@ function M.parse_row(row)
 	--- (I)terate over all lines in a row
 	for _, line in ipairs(row) do
 		--- Remove trailing characters
-		line = line:gsub("[^|]+$", "\n", 1)
+		line = line:gsub("[^|]+$", "", 1)
 		--- Postpone the iteration 
 		table.insert(lines, line:gmatch("|([^|]+)"))
 	end
@@ -56,6 +56,7 @@ function M.parse_row(row)
 	for _, iter in ipairs(lines) do
 		local curr = 1
 		local line = iter()
+
 		while true do
 			if line == nil then
 				break
@@ -84,7 +85,7 @@ function M.parse_lines(lines)
 			break
 		end
 		local multi_line = {}
-		while line:match("|") do
+		while line:match("[|^|]+") do
 			table.insert(multi_line, line)
 			line = iter()
 		end
