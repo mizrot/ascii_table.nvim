@@ -20,6 +20,7 @@ A pure-Lua Neovim plugin for editing ASCII tables with two dedicated modes —
 ```lua
 {
   "mizrot/ascii_table.nvim",
+  branch="claude-solution",
   config = function()
     require("ascii-table").setup({
       enter_key = "<leader>tt",   -- default
@@ -32,6 +33,7 @@ A pure-Lua Neovim plugin for editing ASCII tables with two dedicated modes —
 ```lua
 use {
   "mizrot/ascii_table.nvim",
+  branch="claude-solution",
   config = function()
     require("ascii-table").setup()
   end,
