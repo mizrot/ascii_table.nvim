@@ -12,7 +12,7 @@
 
 local M = {}
 
--- ─── Pattern matching ─────────────────────────────────────────────────────────
+-- Pattern matching 
 
 local SEP_PAT  = "^%+[%-%+]+%+%s*$"   -- +---+---+
 local DATA_PAT = "^|.+|%s*$"           -- | foo | bar |
@@ -29,7 +29,7 @@ function M.is_table_line(line)
   return M.is_separator(line) or M.is_data_row(line)
 end
 
--- ─── Cell splitting ───────────────────────────────────────────────────────────
+-- Cell splitting 
 
 --- Split a data line into trimmed cell strings.
 --- "| foo | bar | baz |" → { "foo", "bar", "baz" }
@@ -44,7 +44,7 @@ function M.split_cells(line)
   return cells
 end
 
--- ─── Boundary detection ───────────────────────────────────────────────────────
+-- Boundary detection 
 
 --- Find the top and bottom line numbers (1-indexed) of the table that contains
 --- buf_line. Returns (top, bot) or nil if buf_line is not inside a table.
@@ -71,7 +71,7 @@ function M.find_bounds(bufnr, buf_line)
   return top, bot
 end
 
--- ─── Parsing ──────────────────────────────────────────────────────────────────
+-- Parsing 
 
 --- Parse buffer lines [start_line, end_line] (1-indexed) into a table struct.
 ---
@@ -133,7 +133,7 @@ function M.parse(bufnr, start_line, end_line)
   }
 end
 
--- ─── Cursor → cell mapping ────────────────────────────────────────────────────
+-- Cursor → cell mapping 
 
 --- Given a buffer position (buf_line, buf_col both 1-indexed), return the
 --- (row_idx, col_idx) of the cell under the cursor, or (nil, nil) if on a

@@ -19,10 +19,10 @@ local parser = require("ascii_table.parser")
 
 local M = {}
 
--- ─── Highlight namespace (shared with table_mode) ────────────────────────────
+-- Highlight namespace (shared with table_mode) 
 local NS = vim.api.nvim_create_namespace("ascii_table")
 
--- ─── Internal helpers ─────────────────────────────────────────────────────────
+-- Internal helpers 
 
 --- Re-highlight the active cell after returning to Table mode.
 local function rehighlight(bufnr, st)

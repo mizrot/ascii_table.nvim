@@ -3,25 +3,27 @@
 --- It is active while navigating and structurally editing a table
 --- (adding/removing rows and columns, aligning, etc.).
 ---
---- ┌─────────────────────────────────────────────────────────────────┐
---- │  Key         │  Action                                          │
---- ├─────────────────────────────────────────────────────────────────┤
---- │  h / ←       │  Move left one cell                              │
---- │  l / →       │  Move right one cell                             │
---- │  k / ↑       │  Move up one row                                 │
---- │  j / ↓       │  Move down one row                               │
---- │  Tab         │  Move right one cell (wraps to next row)         │
---- │  S-Tab       │  Move left one cell                              │
---- │  i / Enter   │  Enter Cell mode (edit current cell)             │
---- │  o           │  Insert row below current row                    │
---- │  O           │  Insert row above current row                    │
---- │  D           │  Delete current row                              │
---- │  A           │  Append column after current column              │
---- │  I           │  Insert column before current column             │
---- │  X           │  Delete current column                           │
---- │  =           │  Re-align / format the whole table               │
---- │  q / Esc     │  Exit Table mode                                 │
---- └─────────────────────────────────────────────────────────────────┘
+--[[
+--- +-----------------------------------------------------------------+
+--- |  Key         |  Action                                          |
+--- +-----------------------------------------------------------------+
+--- |  h / ←       |  Move left one cell                              |
+--- |  l / →       |  Move right one cell                             |
+--- |  k / ↑       |  Move up one row                                 |
+--- |  j / ↓       |  Move down one row                               |
+--- |  Tab         |  Move right one cell (wraps to next row)         |
+--- |  S-Tab       |  Move left one cell                              |
+--- |  i / Enter   |  Enter Cell mode (edit current cell)             |
+--- |  o           |  Insert row below current row                    |
+--- |  O           |  Insert row above current row                    |
+--- |  D           |  Delete current row                              |
+--- |  A           |  Append column after current column              |
+--- |  I           |  Insert column before current column             |
+--- |  X           |  Delete current column                           |
+--- |  =           |  Re-align / format the whole table               |
+--- |  q / Esc     |  Exit Table mode                                 |
+--- +-----------------------------------------------------------------+
+--]]
 
 local parser    = require("ascii_table.parser")
 local renderer  = require("ascii_table.renderer")
