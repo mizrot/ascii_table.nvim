@@ -19,7 +19,7 @@ A pure-Lua Neovim plugin for editing ASCII tables with two dedicated modes —
 ### lazy.nvim
 ```lua
 {
-  "you/ascii-table.nvim",
+  "mizrot/ascii_table.nvim",
   config = function()
     require("ascii-table").setup({
       enter_key = "<leader>tt",   -- default
@@ -31,7 +31,7 @@ A pure-Lua Neovim plugin for editing ASCII tables with two dedicated modes —
 ### packer.nvim
 ```lua
 use {
-  "you/ascii-table.nvim",
+  "mizrot/ascii_table.nvim",
   config = function()
     require("ascii-table").setup()
   end,
